@@ -14,7 +14,7 @@
 
 
 
-OSNAME = $(uname -s)
+OSNAME=$(uname -s)
 
 
 
