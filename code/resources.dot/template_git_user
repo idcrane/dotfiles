@@ -1,0 +1,5 @@
+# .gitconfig_local
+
+[user]
+      name = Ian Crane
+      email = email@example.com

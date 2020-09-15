@@ -1,0 +1,10 @@
+coreutils
+ctags
+fzf
+mediainfo
+neovim
+shellcheck
+stow
+the_silver_searcher
+tree
+yadm

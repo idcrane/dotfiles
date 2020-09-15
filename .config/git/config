@@ -1,0 +1,31 @@
+# .gitconfig
+
+[user]
+    # These values are set in ~/.gitconfig_local
+
+[credential]
+    helper = cache
+
+[core]
+    autocrlf = false
+    editor = vim
+    eol = native
+    excludesfile = ~/.config/git/ignore
+
+[push]
+    default = simple
+
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+    ui = true
+    pager = true
+
+[alias]
+    undo = reset --soft HEAD^
+    glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+    
+[include]
+    path = ~/.config/git/user

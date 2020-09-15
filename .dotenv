@@ -1,0 +1,84 @@
+#!/bin/bash
+#
+# .dotenv
+#
+# Setup machine-independent, shell-independent environment.
+# Sourced for all sessions.
+#
+# Machine-specific changes can be placed in ~/.dotenv_local
+# Note there are also .dotshell, .dotshell_local
+#
+# Global profile configs (such as /etc/profile) should be sourced
+# before this file.
+#
+
+
+
+OSNAME = $(uname -s)
+
+
+
+#====================================================================
+# General
+
+# 256 color terminal
+export TERM='screen-256color'
+
+# conda
+# try loading from possible locations
+# (remember it may have been loaded in say /etc/profile)
+conda_paths=(
+    ~/miniconda3/etc/profile.d/conda.sh
+    ~/opt/miniconda3/etc/profile.d/conda.sh
+    /conda/etc/profile.d/conda.sh
+    )
+for i in "${conda_paths[@]}"; do
+    if [[ -z ${CONDA_EXE+x} ]]; then
+        [[ -f  "$i" ]] && . "$i"
+    fi
+done
+
+# user bin directory
+if [[ -d "$HOME/code/bin" ]]; then
+    export PATH="$HOME/code/bin:$PATH"
+fi
+
+
+
+#====================================================================
+# OS-Specfic
+
+if [[ $OSNAME == "Darwin" ]]; then
+
+    ## macOS installation ##
+
+    # disable macOS bash deprecation warning
+    export BASH_SILENCE_DEPRECATION_WARNING=1
+
+    # add homebrew bin directory
+    if [[ -d '/usr/local/bin' ]]; then
+        export PATH='/usr/local/bin:'$PATH
+    fi
+
+    # export values to entire system
+    # uses $PATH as it exists -- future changes won't carry over
+    launchctl setenv PATH $PATH
+
+else
+
+    ## linux installation ##
+
+    # keychain
+    if [[ -x "$(command -v keychain)" ]]; then
+        eval `keychain --eval --agents ssh id_*`
+    fi
+
+fi
+
+
+
+#====================================================================
+# Finalize
+
+# load machine-dependent, shell-independent environment
+[[ -f "$HOME/.dotenv_local" ]] && . "$HOME/.dotenv_local"

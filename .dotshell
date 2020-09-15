@@ -1,0 +1,66 @@
+#!/bin/bash
+#
+# .dotshell
+#
+# Setup machine-independent, shell-independent .*rc config.
+# Sourced for interactive sessions.
+#
+# Machine-specific changes can be placed in ~/.dotshell_local
+# Note there are also .dotenv, .dotenv_local
+#
+# bash (zsh?) uses commands in functions as read, not when 
+# executed (aliases defined after function is defined won't be used).
+#
+
+
+
+OSNAME = $(uname -s)
+
+
+
+#====================================================================
+# Aliases
+
+# general
+alias ls='ls -p'
+alias ll='ls -lhF'
+alias la='ls -lAhF'
+
+alias home='cd ~'
+alias co='cd ~/code'
+alias ico='cd ~/code/github.com/idcrane'
+
+# dotfiles and stow
+alias dotstow="stow --dotfiles -t ~ -d $DOTDIR"
+
+# git
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gd='git diff'
+
+# tmux
+alias tmux='tmux -2'            # for proper tmux behavior
+
+
+
+#====================================================================
+# Functions
+
+function lcd { cd "$@" && ls; }
+
+
+
+#====================================================================
+# OS-Specific
+
+if [[ $OSNAME == "Darwin" ]]; then
+
+    ## macOS installation ##
+
+    alias search='mdfind -name'
+    alias show='open -R'
+    alias finder_show_hidden='defaults write com.apple.Finder AppleShowAllFiles true && killall Finder'
+    alias finder_hide_hidden='defaults write com.apple.Finder AppleShowAllFiles false && killall Finder'
+ 
+fi

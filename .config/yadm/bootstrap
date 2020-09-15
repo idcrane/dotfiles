@@ -1,0 +1,72 @@
+#! /bin/bash
+#
+# bootstrap.sh
+#
+
+
+
+RDIR="$HOME/code/resources.dot"
+OSNAME="$(uname -s)"
+
+#====================================================================
+# Copy Templates
+
+## dotenv_local (~/.dotenv_local) ##
+if [[ -f "$HOME/dotenv_local" ]]; then
+  echo "WARNING: '$HOME/dotenv_local' already exists. Skipping file creation."
+
+else
+  cp "$RDIR/template_dotenv_local" "$HOME/.dotenv_local"
+  chmod 600 "$HOME/.dotenv_local"
+fi
+
+
+## git user (~/.config/git/user) ##
+if [[ -f "$HOME/.config/git/user" ]]; then
+  echo "WARNING: '$HOME/.config/git/user' already exists. Skipping file creation."
+
+else
+  echo "Please enter email address for use with git:"
+  read -r GIT_EMAIL
+  sed "s/email@example.com/$GIT_EMAIL/g" "$RDIR/template_git_user" > "$HOME/.config/git/user"
+fi
+
+
+## .ssh/config ($HOME/.ssh) ##
+# note ssh doesn't allow this file to be symlinked
+if [[ -f ~/.ssh/config ]]; then
+  echo "WARNING: '$HOME/.ssh/config' already exists. Skipping copy of .ssh/config template."
+
+else
+  if [[ $OSNAME == "Darwin" ]]; then
+    # macOS
+    grep -v '# linux only' "$RDIR/template_ssh_config" > ~/.ssh/config
+
+  else
+    # linux
+    grep -v '# macOS only' "$RDIR/template_ssh_config" > ~/.ssh/config
+  fi
+
+  chown "$USER:$USER" ~/.ssh/config
+  chmod 600 ~/.ssh/config
+fi
+
+
+
+#====================================================================
+# Initialize Executables 
+
+# bootstrap vim plugin manager
+if [[ -x "$(command -v vim)" ]]; then
+  vim '+PlugUpdate' '+PlugClean!' '+qall'
+else
+  if [[ -x "$(command -v nvim)" ]]; then
+    nvim '+PlugUpdate' '+PlugClean!' '+qall'
+  else 
+    echo "Vim and NeoVim were not found. Skipping Vim plugin initialization."
+  fi
+fi
+
+
+# FZF
+# TODO

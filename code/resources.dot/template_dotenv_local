@@ -1,0 +1,9 @@
+# .dotenv_local
+#
+# Setup machine-dependent, shell-independent environment.
+# Sourced for all sessions via .dotenv
+#
+# Note there are also .dotenv, .dotshell, .dotshell_local
+#
+
+
