@@ -38,6 +38,11 @@ for i in "${conda_paths[@]}"; do
     fi
 done
 
+# user dotfiles bin directory
+if [[ -d "$HOME/code/dotbin" ]]; then
+    export PATH="$HOME/code/dotbin:$PATH"
+fi
+
 # user bin directory
 if [[ -d "$HOME/code/bin" ]]; then
     export PATH="$HOME/code/bin:$PATH"
@@ -62,7 +67,7 @@ if [[ $OSNAME == "Darwin" ]]; then
 
     # export values to entire system
     # uses $PATH as it exists -- future changes won't carry over
-    launchctl setenv PATH $PATH
+    launchctl setenv PATH "$PATH"
 
 else
 

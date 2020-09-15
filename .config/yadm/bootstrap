@@ -1,50 +1,59 @@
 #! /bin/bash
 #
-# bootstrap.sh
+# bootstrap
+#
+# Bootstrap file to use when setting up user account.
+# This script is meant to be idempotent.
 #
 
 
 
-RDIR="$HOME/code/resources.dot"
+#====================================================================
+# Get Info
+
+TDIR="$HOME/code/dotlib/templates"
 OSNAME="$(uname -s)"
+
+
 
 #====================================================================
 # Copy Templates
 
-## dotenv_local (~/.dotenv_local) ##
+## dotenv_local (~/.dotenv_local)
 if [[ -f "$HOME/dotenv_local" ]]; then
   echo "WARNING: '$HOME/dotenv_local' already exists. Skipping file creation."
 
 else
-  cp "$RDIR/template_dotenv_local" "$HOME/.dotenv_local"
+  cp "$TDIR/dotenv_local" "$HOME/.dotenv_local"
   chmod 600 "$HOME/.dotenv_local"
 fi
 
 
-## git user (~/.config/git/user) ##
+## git user (~/.config/git/user)
 if [[ -f "$HOME/.config/git/user" ]]; then
   echo "WARNING: '$HOME/.config/git/user' already exists. Skipping file creation."
 
 else
   echo "Please enter email address for use with git:"
   read -r GIT_EMAIL
-  sed "s/email@example.com/$GIT_EMAIL/g" "$RDIR/template_git_user" > "$HOME/.config/git/user"
+  sed "s/email@example.com/$GIT_EMAIL/g" "$TDIR/git_user" > "$HOME/.config/git/user"
 fi
 
 
-## .ssh/config ($HOME/.ssh) ##
+## .ssh/config ($HOME/.ssh)
 # note ssh doesn't allow this file to be symlinked
+# TODO: switch to yadm's templates
 if [[ -f ~/.ssh/config ]]; then
   echo "WARNING: '$HOME/.ssh/config' already exists. Skipping copy of .ssh/config template."
 
 else
   if [[ $OSNAME == "Darwin" ]]; then
     # macOS
-    grep -v '# linux only' "$RDIR/template_ssh_config" > ~/.ssh/config
+    grep -v '# linux only' "$TDIR/ssh_config" > ~/.ssh/config
 
   else
     # linux
-    grep -v '# macOS only' "$RDIR/template_ssh_config" > ~/.ssh/config
+    grep -v '# macOS only' "$TDIR/ssh_config" > ~/.ssh/config
   fi
 
   chown "$USER:$USER" ~/.ssh/config
@@ -70,3 +79,11 @@ fi
 
 # FZF
 # TODO
+
+
+
+#====================================================================
+# Final Instructions
+
+echo "Run code/dotbin/ssh-keygen-25519 to create ssh keys."
+echo "Use seperate keys for ssh and git."
