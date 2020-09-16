@@ -31,7 +31,7 @@ alias co='cd ~/code'
 alias ico='cd ~/code/github.com/idcrane'
 
 # dotfiles and stow
-alias dotstow="stow --dotfiles -t ~ -d $DOTDIR"
+alias dotstow='stow --dotfiles -t ~ -d $DOTDIR'
 
 # git
 alias gs='git status'
