@@ -71,7 +71,7 @@ fi
 ## .ssh/config ($HOME/.ssh)
 # note ssh doesn't allow this file to be symlinked
 # TODO: switch to yadm's templates
-if [[ -f ~/.ssh/config ]]; then
+if [[ -f "$HOME/.ssh/config" ]]; then
   echo "WARNING: '$HOME/.ssh/config' already exists. Skipping."
 
 else
@@ -86,6 +86,12 @@ else
 
   chown "$USER:$USER" ~/.ssh/config
   chmod 600 ~/.ssh/config
+fi
+
+
+## bash_dessions_disable (~/.bash_sessions_disable)
+if [[ $OSNAME == "Darwin" ]] && [[ ! -f "$HOME/.bash_sessions_disable" ]]; then
+  cp "$TDIR/bash_sessions_disable" "$HOME/.bash_sessions_disable"
 fi
 
 
