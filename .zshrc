@@ -34,6 +34,50 @@ setopt NO_CASE_GLOB                     # case insensitive globbing
 setopt AUTO_CD                          # auto cd into dir if only name of dir is passed
 setopt MULTIOS                          # allow multiple opening of file descriptors
 
+bindkey -v                              # vim mode
+bindkey "^?" backward-delete-char       # have insert mode backspace behave as expected
+
+
+
+#====================================================================
+# Prompt
+
+# Notes:
+# %B sets bold, %b cancels it. %F sets color, %f resets it
+# vcs_info check-for-changes finds staged and unstaged changes but not untracked files
+# vcs_info explanation: https://arjanvandergaag.nl/blog/customize-zsh-prompt-with-vcs-info.html
+
+autoload -Uz vcs_info                   # load zsh's VCS features for git integration in prompt
+
+setopt PROMPT_SUBST                     # expand prompt string
+
+# define function to determine if there are untracked files in working tree
+# https://stackoverflow.com/questions/1128496/to-get-a-prompt-which-indicates-git-branch-in-zsh
++vi-git-untracked() {
+  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
+     [[ $(git ls-files --other --directory --no-empty-directory --exclude-standard | \
+           sed q | wc -l | tr -d ' ') == 1 ]] ; then
+  hook_com[unstaged]+='%F{208}?%f '
+fi
+}
+
+# vcs prompt integration
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' formats '%B%F{green} [%b] %F{208}%c%u%f'
+zstyle ':vcs_info:*' actionformats '%B%F{green} [%b %F{208}%a%F{green}] %F{208}%c%u%f'
+
+# vcs prompt integration -- status symbols (slow on large repos)
+zstyle ':vcs_info:*' stagedstr 's'
+zstyle ':vcs_info:*' unstagedstr 'n'
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
+
+precmd () { vcs_info }
+
+# prompt formats
+PS1='%B%F{cyan}%n@%m %% %b%F{white}'
+RPS1='%B${vcs_info_msg_0_}%F{white}%2~%f%b'
+
 
 
 #====================================================================
@@ -60,6 +104,8 @@ HISTSIZE=5000                           # lines of history to keep in memory
 # change arrow keybindings
 bindkey "^[[A" up-line-or-search        # switch up arrow to search of previous history
 bindkey "^[[B" down-line-or-search      # switch down arrow to search of previous history
+bindkey -M vicmd 'k' down-line-or-search    # same for vim mode
+bindkey -M vicmd 'j' up-line-or-search      # same for vim mode
 
 
 
@@ -90,7 +136,7 @@ zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-dir
 zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion::complete:*' cache-path $ZSH_CACHE_DIR
 
-# don't complete uninteresting users
+# don't complete uninteresting users (courtesy of oh-my-zsh)
 zstyle ':completion:*:*:*:users' ignored-patterns \
         adm amanda apache at avahi avahi-autoipd beaglidx bin cacti canna \
         clamav daemon dbus distcache dnsmasq dovecot fax ftp games gdm \
@@ -104,98 +150,84 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
 # ... unless we really want to.
 zstyle '*' single-ignored show
 
+# load homebrew completions
+if [[ -x "$(command -v brew)" ]]; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+fi
+
 # NOTE: compinit is called at end of this file, as you don't want to call it more than once
 
 
 
 #====================================================================
-# Colors
+# Zinit Plugin Manager
 
-# oh-my-zsh had good color handling for other OSs
-
-autoload -U colors && colors            # load colors
-
-# set macOS/BSD LSCOLORS, which is very different from GNU/Linux LS_COLORS
-export LSCOLORS="Gxfxcxdxbxegedabagacad"
-
-# use LS_COLORS for completion colors
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-
-# set process completion colors
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
-
-# borrowed from oh-my-zsh
-if [[ $(uname) == "Darwin" ]]; then
-
-    ## macOS installation ##
-
-    # this is a good alias, it works by default just using $LSCOLORS
-    ls -G . &>/dev/null && alias ls='ls -G'
-
-    # only use coreutils ls if there is a dircolors customization present 
-    #($LS_COLORS or .dircolors file)
-    # otherwise, gls will use the default color scheme which is ugly af
-    [[ -n "$LS_COLORS" || -f "$HOME/.dircolors" ]] && \
-        gls --color -d . &>/dev/null && alias ls='gls --color=tty'
-
-  else
-
-    ## linux installation ##
-
-    # For GNU ls, we use the default ls color theme. They can later be overwritten by themes.
-    if [[ -z "$LS_COLORS" ]]; then
-      (( $+commands[dircolors] )) && eval "$(dircolors -b)"
-    fi
+# auto-install if not on system
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
-ls --color -d . &>/dev/null && alias ls='ls --color=tty' || { ls -G . &>/dev/null && alias ls='ls -G' }
+# load the plugin manager
+# this will download any missing plugins
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zinit-zsh/z-a-rust \
+    zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-bin-gem-node
 
 
 
 #====================================================================
-# Prompt
+# Plugins and compinit
 
-# Notes:
-# %B sets bold, %b cancels it. %F sets color, %f resets it
-# vcs_info check-for-changes finds staged and unstaged changes but not untracked files
-# vcs_info explanation: https://arjanvandergaag.nl/blog/customize-zsh-prompt-with-vcs-info.html
+# moving around directories
+# % z DIRNAME
+zinit light agkozak/zsh-z
 
-autoload -Uz vcs_info                   # load zsh's VCS features for git integration in prompt
+# one command to extract archive files
+# % extract FILENAME
+zinit light le0me55i/zsh-extract
 
-setopt PROMPT_SUBST                     # expand prompt string
+# add additional completions
+zinit light zsh-users/zsh-completions
 
-# define function to determine if there are untracked files in working tree
-# https://stackoverflow.com/questions/1128496/to-get-a-prompt-which-indicates-git-branch-in-zsh
-+vi-git-untracked() {
-  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
-     [[ $(git ls-files --other --directory --no-empty-directory --exclude-standard | \
-           sed q | wc -l | tr -d ' ') == 1 ]] ; then
-  hook_com[unstaged]+='%F{208}?%f '
+# use fzf for completion
+# note that fzf-tab needs to be loaded after compinit,
+# but before plugins that wrap widgets like zsh-autosuggestions
+if [[ -x "$(command -v fzf)" ]]; then
+  zinit load Aloxaf/fzf-tab
+else
+  echo "WARNING: fzf not found in path"
 fi
-}
 
-# vcs prompt integration
-zstyle ':vcs_info:*' enable git 
-zstyle ':vcs_info:*' formats '%B%F{green} [%b] %F{208}%c%u%f'
-zstyle ':vcs_info:*' actionformats '%B%F{green} [%b %F{208}%a%F{green}] %F{208}%c%u%f'
+# run compinit
+# ignore insecure directories if on my laptop with non admin account
+autoload -Uz compinit
+if [[ $(whoami) = "ian" ]] && [[ $(uname -s) = "Darwin" ]]; then
+  compinit -i
+else
+  compinit
+fi
 
-# vcs prompt integration -- status symbols (slow on large repos)
-zstyle ':vcs_info:*' stagedstr 's' 
-zstyle ':vcs_info:*' unstagedstr 'n' 
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
+# show history matches when typing
+# must be loaded after fzf
+zinit load zsh-users/zsh-autosuggestions
 
-precmd () { vcs_info }
-
-# prompt formats
-PS1='%B%F{cyan}%n@%m %% %b%F{white}'
-RPS1='%B${vcs_info_msg_0_}%F{white}%2~%f%b'
-
-
-
-#====================================================================
-# Finalize
-
-# enable completion
-# TODO: Fix insecure directories. Currently those directories are ignored with -i
-autoload -Uz compinit && compinit -i
+# search history for substrings
+# note we switch above keybindings to those specific to plugin
+# must be loaded after fzf
+zinit load zsh-users/zsh-history-substring-search
+bindkey "^[[A" history-substring-search-up
+bindkey "^[[B" history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down

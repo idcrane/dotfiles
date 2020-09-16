@@ -93,7 +93,10 @@ fi
 #====================================================================
 # Initialize Executables 
 
-# bootstrap vim plugin manager
+# Note: zsh plugin manager (zinit) will bootstrap itself when zsh is used
+# Note: tmux plugin manager (tpm) will bootstrap itself tmux is used
+
+# vim Plug plugin manager
 if [[ -x "$(command -v vim)" ]]; then
   vim '+PlugUpdate' '+PlugClean!' '+qall'
 else
@@ -105,16 +108,16 @@ else
 fi
 
 
-# FZF
-# TODO
-
-
 
 #====================================================================
 # Final Instructions
 
 echo "
 Final Steps:
+- Run 'zinit self-update' in new shell
+- Run fzf installation
+  - homebrew: $(brew --prefix)/opt/fzf/install
+  - git clone: ~/.fzf/install
 - Run code/dotbin/ssh-keygen-25519 to create ssh keys (seperate for ssh and git).
 
 Bootstrap complete! Please restart all shells."
