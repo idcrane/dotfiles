@@ -28,6 +28,7 @@ cd "$HOME" || { echo 'ERROR Cannot cd into ~'; exit 1; }
 
 # code/
 mkdir -p "$HOME/code/bin"
+mkdir -p "$HOME/code/managed"
 mkdir -p "$HOME/code/repos/_github"
 mkdir -p "$HOME/code/scratch"
 
@@ -91,15 +92,27 @@ fi
 # Note: zsh plugin manager (zinit) will bootstrap itself when zsh is used
 # Note: tmux plugin manager (tpm) will bootstrap itself tmux is used
 
+# fzf
+if [[ ! -f "$HOME/.fzf.bash" ]]; then
+  if [[ -f '/usr/local/opt/fzf/install' ]]; then
+    '/usr/local/opt/fzf/install'
+  elif [[ -f "$HOME/.fzf/install" ]]; then
+    "$HOME/.fzf/install"
+  else
+    echo "WARNING: fzf install command not found. Skipping."
+  fi
+else
+  echo "WARNING: fzf has already been initialized. Skipping"
+fi
+
+
 # vim Plug plugin manager
 if [[ -x "$(command -v vim)" ]]; then
   vim '+PlugUpdate' '+PlugClean!' '+qall'
+elif [[ -x "$(command -v nvim)" ]]; then
+  nvim '+PlugUpdate' '+PlugClean!' '+qall'
 else
-  if [[ -x "$(command -v nvim)" ]]; then
-    nvim '+PlugUpdate' '+PlugClean!' '+qall'
-  else 
-    echo "Vim and NeoVim were not found. Skipping Vim plugin initialization."
-  fi
+  echo "WARNING: Vim or NeoVim were not found. Skipping Vim plugin initialization."
 fi
 
 
@@ -108,11 +121,5 @@ fi
 # Final Instructions
 
 echo "
-Final Steps:
-- Run 'zinit self-update' in new shell
-- Run fzf installation
-  - homebrew: $(brew --prefix)/opt/fzf/install
-  - git clone: ~/.fzf/install
-- Run code/dotbin/ssh-keygen-25519 to create ssh keys (seperate for ssh and git).
-
-Bootstrap complete! Please restart all shells."
+Bootstrap complete! Please see README for final tasks.
+"
