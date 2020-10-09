@@ -102,7 +102,7 @@ if [[ ! -f "$HOME/.fzf.bash" ]]; then
     echo "WARNING: fzf install command not found. Skipping."
   fi
 else
-  echo "WARNING: fzf has already been initialized. Skipping"
+  echo "WARNING: fzf has already been initialized. Skipping."
 fi
 
 
@@ -112,7 +112,7 @@ if [[ -x "$(command -v nvim)" ]]; then
 elif [[ -x "$(command -v vim)" ]]; then
   vim '+PlugUpdate' '+PlugClean!' '+qall'
 else
-  echo "WARNING: vim or neovim were not found. Skipping vim plugin initialization."
+  echo "WARNING: vim or neovim were not found. Skipping plugin initialization."
 fi
 
 
