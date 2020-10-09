@@ -107,12 +107,12 @@ fi
 
 
 # vim Plug plugin manager
-if [[ -x "$(command -v vim)" ]]; then
-  vim '+PlugUpdate' '+PlugClean!' '+qall'
-elif [[ -x "$(command -v nvim)" ]]; then
+if [[ -x "$(command -v nvim)" ]]; then
   nvim '+PlugUpdate' '+PlugClean!' '+qall'
+elif [[ -x "$(command -v vim)" ]]; then
+  vim '+PlugUpdate' '+PlugClean!' '+qall'
 else
-  echo "WARNING: Vim or NeoVim were not found. Skipping Vim plugin initialization."
+  echo "WARNING: vim or neovim were not found. Skipping vim plugin initialization."
 fi
 
 
