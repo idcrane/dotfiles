@@ -22,7 +22,7 @@ OSNAME=$(uname -s)
 # Aliases
 
 # general
-alias ls='ls -p'
+alias ls='ls -F'
 alias ll='ls -lhF'
 alias la='ls -lAhF'
 
