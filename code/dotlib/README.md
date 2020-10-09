@@ -36,7 +36,7 @@ yadm
 ### Optional Tools (easiest if installed before yadm bootstrap)
 
 - [fzf](guides/fzf.md)
-- keychain (linux only)
+- [keychain](guides/keychain.md) (linux only)
 - [neovim](guides/neovim.md)
 - tmux (version >= 2.1)
 - zsh
