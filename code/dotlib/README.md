@@ -24,6 +24,7 @@ zinit self-update   # in a new shell if using zsh
 ### Post-Bootstrap Tasks
 
 - `ssh-keygen-25519` to create ssh keys (`id_ed25519` and `id_ed25519_git`)
+- Install Miniconda (try `install-miniconda`)
 
 ## Dependencies
 
@@ -34,9 +35,7 @@ yadm
 
 ### Optional Tools (easiest if installed before yadm bootstrap)
 
-- [conda](guides/fzf.md) (via miniconda)
-
-- fzf
+- [fzf](guides/fzf.md)
 - keychain (linux only)
 - [neovim](guides/neovim.md)
 - tmux (version >= 2.1)
