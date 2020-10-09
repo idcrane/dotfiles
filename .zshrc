@@ -1,3 +1,5 @@
+#!/bin/zsh
+#
 # .zshrc
 #
 # Sourced by zsh interactive sessions.

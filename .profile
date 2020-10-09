@@ -1,3 +1,5 @@
+#!/bin/bash
+#
 # .profile
 #
 # Sourced by various shell sessions, never by zsh.
@@ -9,10 +11,13 @@
 
 
 # source global profile
+# shellcheck disable=SC1091
 [[ -f '/etc/profile' ]] && . '/etc/profile'
 
 # source machine-independent, shell-independent environment
+# shellcheck disable=SC1090
 [[ -f "$HOME/.dotenv" ]] && . "$HOME/.dotenv"
 
 # source machine-dependent, shell-independent environment
+# shellcheck disable=SC1090
 [[ -f "$HOME/.dotenv_local" ]] && . "$HOME/.dotenv_local"

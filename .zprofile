@@ -1,3 +1,5 @@
+#!/bin/zsh
+#
 # .zprofile
 #
 # Sourced by zsh sessions.

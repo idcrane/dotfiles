@@ -87,4 +87,5 @@ fi
 # Finalize
 
 # load machine-dependent, shell-independent environment
+# shellcheck disable=SC1090
 [[ -f "$HOME/.dotenv_local" ]] && . "$HOME/.dotenv_local"
