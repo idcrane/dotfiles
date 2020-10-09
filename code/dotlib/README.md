@@ -34,14 +34,13 @@ yadm
 
 ### Optional Tools (easiest if installed before yadm bootstrap)
 
-```sh
-conda                # via miniconda
-fzf
-keychain             # linux only
-neovim
-tmux                 # version >= 2.1
-zsh
-```
+- [conda](guides/fzf.md) (via miniconda)
+
+- fzf
+- keychain (linux only)
+- [neovim](guides/neovim.md)
+- tmux (version >= 2.1)
+- zsh
 
 ## Custom Configurations
 
