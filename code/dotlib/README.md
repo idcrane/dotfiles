@@ -8,6 +8,7 @@ Ian's dotfiles and resources.
 
 ```sh
 # 1) install yadm as script (if necessary)
+mkdir -p ~/code/bin 
 curl -fLo ~/code/bin/yadm https://github.com/TheLocehiliosan/yadm/raw/master/yadm
 chmod 700 ~/code/bin/yadm
 
