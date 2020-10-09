@@ -1,4 +1,6 @@
-# .bashrc
+#!/bin/bash
+#
+#.bashrc
 #
 # Sourced by bash interactive sessions.
 # Manually sourced in .bash_profile.
@@ -12,15 +14,19 @@
 # Other Configs
 
 # load global config
+# shellcheck disable=SC1091
 [[ -f '/etc/bashrc' ]] && . '/etc/bashrc'
 
 # load fzf config
+# shellcheck disable=SC1090
 [[ -f "$HOME/.fzf.bash" ]] && . "$HOME/.fzf.bash"
 
 # load personal, machine-independent, shell-independent config
+# shellcheck disable=SC1090
 [[ -f "$HOME/.dotshell" ]] && . "$HOME/.dotshell"
 
 # load personal, machine-dependent, shell-independent config
+# shellcheck disable=SC1090
 [[ -f "$HOME/.dotshell_local" ]] && . "$HOME/.dotshell_local"
 
 
