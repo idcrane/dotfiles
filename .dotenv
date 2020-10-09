@@ -28,19 +28,20 @@ export TERM='screen-256color'
 # try loading from possible locations
 # (remember it may have been loaded in say /etc/profile)
 conda_paths=(
-    ~/miniconda3/etc/profile.d/conda.sh
-    ~/opt/miniconda3/etc/profile.d/conda.sh
-    /conda/etc/profile.d/conda.sh
+    "$HOME/miniconda3/etc/profile.d/conda.sh"
+    "$HOME/opt/miniconda3/etc/profile.d/conda.sh"
+    "/conda/etc/profile.d/conda.sh"
     )
 for i in "${conda_paths[@]}"; do
     if [[ -z ${CONDA_EXE+x} ]]; then
+         # shellcheck disable=SC1090
         [[ -f  "$i" ]] && . "$i"
     fi
 done
 
 # user dotfiles bin directory
-if [[ -d "$HOME/code/dotbin" ]]; then
-    export PATH="$HOME/code/dotbin:$PATH"
+if [[ -d "$HOME/code/dotlib/bin" ]]; then
+    export PATH="$HOME/code/dotlib/bin:$PATH"
 fi
 
 # user bin directory
