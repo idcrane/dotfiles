@@ -120,6 +120,8 @@ fi
 #====================================================================
 # Final Instructions
 
+ln -s "$HOME/.config/yadm/bootstrap" "$HOME/code/dotlib/bootstrap"
+
 echo "
 Bootstrap complete! Please see README for final tasks.
 "
