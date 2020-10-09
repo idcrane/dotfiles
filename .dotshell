@@ -39,6 +39,14 @@ alias ga='git add'
 alias gc='git commit'
 alias gd='git diff'
 
+# vim
+if [[ -x "$(command -v nvim)" ]]; then
+    alias e='nvim'
+    alias vim='nvim'
+else
+    alias e='vim'
+fi
+
 # tmux
 alias tmux='tmux -2'            # for proper tmux behavior
 
