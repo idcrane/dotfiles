@@ -37,6 +37,11 @@ setopt MULTIOS                          # allow multiple opening of file descrip
 bindkey -v                              # vim mode
 bindkey "^?" backward-delete-char       # have insert mode backspace behave as expected
 
+# stop _z_precmd:1: nice(5) failed error messages in the Windows Subsystem for Linux
+case $(uname -a) in
+   *Microsoft*) unsetopt BG_NICE ;;
+esac
+
 
 
 #====================================================================
