@@ -218,13 +218,14 @@ else
 fi
 
 # run compinit
-# ignore insecure directories if on my laptop with non admin account
 autoload -Uz compinit
-if [[ $(whoami) = "ian" ]] && [[ $(uname -s) = "Darwin" ]]; then
-  compinit -i
-else
-  compinit
-fi
+# # ignore insecure directories if on my laptop with non admin account
+# if [[ $(whoami) = "ian" ]] && [[ $(uname -s) = "Darwin" ]]; then
+#   compinit -i
+# else
+#   compinit
+# fi
+compinit -i
 
 # show history matches when typing
 # must be loaded after fzf
