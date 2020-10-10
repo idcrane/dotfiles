@@ -8,6 +8,7 @@ Ian's dotfiles and resources.
 
 ```sh
 # 1) install yadm as script (if necessary)
+mkdir -p ~/code/bin 
 curl -fLo ~/code/bin/yadm https://github.com/TheLocehiliosan/yadm/raw/master/yadm
 chmod 700 ~/code/bin/yadm
 
@@ -15,7 +16,7 @@ chmod 700 ~/code/bin/yadm
 #    (not necessary, but easier if done before bootstrap)
 
 # 3)
-yadm clone --bootstrap https://github.com/idcrane/dotfiles
+~/code/bin/yadm clone --bootstrap https://github.com/idcrane/dotfiles
 
 # 4)
 zinit self-update   # in a new shell if using zsh
