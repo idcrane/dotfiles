@@ -28,10 +28,8 @@ zinit self-update   # in a new shell if using zsh
 
 ## Dependencies
 
-```sh
-git
-yadm
-```
+- [git](guides/git.md) (>= 2.0)
+- yadm
 
 ### Optional Tools (easiest if installed before yadm bootstrap)
 
