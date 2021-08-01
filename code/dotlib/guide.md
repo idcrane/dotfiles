@@ -121,3 +121,12 @@ ssh-keygen-25519
 # install public key on server
 ssh-copy-id -i ~/.ssh/id_rsa.pub -p port user@host
 ```
+
+Required permissions for ssh:
+
+- .ssh directory: 700 (drwx------)
+- public keys: 644 (-rw-r--r--)
+- private keys: 600 (-rw-------)
+- .ssh/config: 600 (-rw-------)
+- .ssh/authorized_keys: 600 (-rw-------)
+- home directory should not be writeable by the group or others (at most 755 (drwxr-xr-x))

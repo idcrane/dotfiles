@@ -1,4 +1,7 @@
 Host *
+    User git
+
+Host *
     ForwardAgent no
     AddKeysToAgent yes
     UseKeychain yes                         # macOS only
