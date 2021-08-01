@@ -30,6 +30,11 @@ alias home='cd ~'
 alias co='cd ~/code'
 alias ico='cd ~/code/github.com/idcrane'
 
+# bat
+if [[ -x "$(command -v bat)" ]]; then
+    alias cat='bat'
+fi
+
 # dotfiles and stow
 alias dotstow='stow --dotfiles -t ~ -d $DOTDIR'
 
@@ -39,6 +44,9 @@ alias ga='git add'
 alias gc='git commit'
 alias gd='git diff'
 
+# tmux
+alias tmux='tmux -2'            # for proper tmux behavior
+
 # vim
 if [[ -x "$(command -v nvim)" ]]; then
     alias e='nvim'
@@ -46,9 +54,6 @@ if [[ -x "$(command -v nvim)" ]]; then
 else
     alias e='vim'
 fi
-
-# tmux
-alias tmux='tmux -2'            # for proper tmux behavior
 
 
 
