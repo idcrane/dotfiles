@@ -14,6 +14,9 @@
 # shellcheck disable=SC1091
 [[ -f '/etc/bash_profile' ]] && . '/etc/bash_profile'
 
+# source /usr/local/etc/profile.d bash completion
+[[ -r '/usr/local/etc/profile.d/bash_completion.sh' ]] && . '/usr/local/etc/profile.d/bash_completion.sh'
+
 # source machine-independent, shell-independent environment
 # shellcheck disable=SC1090
 [[ -f "$HOME/.dotenv" ]] && . "$HOME/.dotenv"
