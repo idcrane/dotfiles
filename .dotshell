@@ -33,6 +33,7 @@ alias ico='cd ~/code/github.com/idcrane'
 # bat
 if [[ -x "$(command -v bat)" ]]; then
     alias cat='bat'
+    alias less='bat'
 fi
 
 # dotfiles and stow
