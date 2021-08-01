@@ -28,6 +28,7 @@ cd "$HOME" || { echo 'ERROR Cannot cd into ~'; exit 1; }
 
 # code/
 mkdir -p "$HOME/code/bin"
+mkdir -p "$HOME/code/config"
 mkdir -p "$HOME/code/managed"
 mkdir -p "$HOME/code/repos/_github"
 mkdir -p "$HOME/code/scratch"

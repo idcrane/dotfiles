@@ -51,6 +51,7 @@ Git customizations can be added  `~/.config/git/user`
 ```sh
 ~/code
 ├── bin              # added to PATH
+|-- config           # config for scripts or custom tools
 ├── dotlib           # resources from dotfile repo
 ├── managed          # location for files managed elsewhere (ie PyCharm deploy)
 ├── repos            # location for repos (repos without remote at this level)
