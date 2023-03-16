@@ -30,7 +30,6 @@ cd "$HOME" || { echo 'ERROR Cannot cd into ~'; exit 1; }
 mkdir -p "$HOME/code/bin"
 mkdir -p "$HOME/code/config"
 mkdir -p "$HOME/code/managed"
-mkdir -p "$HOME/code/repos/_github"
 mkdir -p "$HOME/code/scratch"
 
 
@@ -100,7 +99,8 @@ if [[ ! -f "$HOME/.fzf.bash" ]]; then
   elif [[ -f "$HOME/.fzf/install" ]]; then
     "$HOME/.fzf/install"
   else
-    echo "WARNING: fzf install command not found. Skipping."
+    echo "WARNING: fzf install command not found. Skipping installation."
+    echo 'Run ~/.fzf/install when ready'
   fi
 else
   echo "WARNING: fzf has already been initialized. Skipping."

@@ -31,7 +31,7 @@ conda_paths=(
     "$HOME/miniconda3/etc/profile.d/conda.sh"
     "$HOME/opt/miniconda3/etc/profile.d/conda.sh"
     "/conda/etc/profile.d/conda.sh"
-    )
+)
 for i in "${conda_paths[@]}"; do
     if [[ -z ${CONDA_EXE+x} ]]; then
          # shellcheck disable=SC1090
@@ -61,8 +61,11 @@ if [[ $OSNAME == "Darwin" ]]; then
     # disable macOS bash deprecation warning
     export BASH_SILENCE_DEPRECATION_WARNING=1
 
-    # add homebrew bin directory
-    if [[ -d '/usr/local/bin' ]]; then
+    # homebrew apple silicon
+    if [[ -d '/opt/homebrew/bin/' ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    # homebrew intel
+    elif [[ -d '/usr/local/bin' ]]; then
         export PATH='/usr/local/bin:'$PATH
     fi
 
@@ -87,5 +90,5 @@ fi
 # Finalize
 
 # load machine-dependent, shell-independent environment
-# shellcheck disable=SC1090
+# shellcheck disable=SC1091
 [[ -f "$HOME/.dotenv_local" ]] && . "$HOME/.dotenv_local"

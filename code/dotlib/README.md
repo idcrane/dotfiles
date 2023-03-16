@@ -7,7 +7,7 @@ Ian's dotfiles and resources.
 [yadm Installation Guide](https://yadm.io/docs/install)
 
 ```sh
-# 1) install yadm as script (if necessary)
+# 1) install yadm as script (if necessaryop[])
 mkdir -p ~/code/bin 
 curl -fLo ~/code/bin/yadm https://github.com/TheLocehiliosan/yadm/raw/master/yadm
 chmod 700 ~/code/bin/yadm
@@ -55,7 +55,6 @@ Git customizations can be added  `~/.config/git/user`
 ├── dotlib           # resources from dotfile repo
 ├── managed          # location for files managed elsewhere (ie PyCharm deploy)
 ├── repos            # location for repos (repos without remote at this level)
-│   └── _github      # subdirectories by remote server
 └── scratch          # work without a repo
 ```
 

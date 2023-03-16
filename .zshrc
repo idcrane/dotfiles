@@ -105,7 +105,7 @@ setopt HIST_IGNORE_SPACE                # ignore commands that start with space
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 
 # how much history to keep 
-SAVEHIST=10000                           # lines of history to keep on disk
+SAVEHIST=10000                          # lines of history to keep on disk
 HISTSIZE=5000                           # lines of history to keep in memory
 
 # change arrow keybindings
@@ -170,72 +170,70 @@ fi
 # Zinit Plugin Manager
 
 # auto-install if not on system
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit"
+if [[ ! -f "${ZINIT_HOME}/zinit.zsh" ]]; then
+  echo "Installing zinit plugin manager to ${ZINIT_HOME}"
+  mkdir -p "$(dirname $ZINIT_HOME)"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
 # load the plugin manager
-# this will download any missing plugins
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+if [[ -f "${ZINIT_HOME}/zinit.zsh" ]]; then
+  source "${ZINIT_HOME}/zinit.zsh"
+else
+  echo "WARNING: Error loading zinit plugin manager"
+fi
 
-# load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-    zinit-zsh/z-a-rust \
-    zinit-zsh/z-a-as-monitor \
-    zinit-zsh/z-a-patch-dl \
-    zinit-zsh/z-a-bin-gem-node
+# load plugins
+if command -v zinit >& /dev/null; then
+  # load a few important annexes, without Turbo
+  # (this is currently required for annexes)
+   zinit light-mode for \
+    zdharma-continuum/z-a-rust \
+    zdharma-continuum/z-a-as-monitor \
+    zdharma-continuum/z-a-patch-dl \
+    zdharma-continuum/z-a-bin-gem-node
+
+  # moving around directories
+  # % z DIRNAME
+  zinit light agkozak/zsh-z
+
+  # one command to extract archive files
+  # % extract FILENAME
+  zinit light le0me55i/zsh-extract
+
+  # add additional completions
+  zinit light zsh-users/zsh-completions
+
+  # use fzf for completion
+  # note that fzf-tab needs to be loaded after compinit,
+  # but before plugins that wrap widgets like zsh-autosuggestions
+  if [[ -x "$(command -v fzf)" ]]; then
+    zinit load Aloxaf/fzf-tab
+  else
+    echo "WARNING: fzf not found in path"
+  fi
+
+
+  # show history matches when typing
+  # must be loaded after fzf
+  zinit load zsh-users/zsh-autosuggestions
+
+  # search history for substrings
+  # note we switch above keybindings to those specific to plugin
+  # must be loaded after fzf
+  zinit load zsh-users/zsh-history-substring-search
+  bindkey "^[[A" history-substring-search-up
+  bindkey "^[[B" history-substring-search-down
+  bindkey -M vicmd 'k' history-substring-search-up
+  bindkey -M vicmd 'j' history-substring-search-down
+fi
 
 
 
 #====================================================================
-# Plugins and compinit
+# compinit
 
-# moving around directories
-# % z DIRNAME
-zinit light agkozak/zsh-z
-
-# one command to extract archive files
-# % extract FILENAME
-zinit light le0me55i/zsh-extract
-
-# add additional completions
-zinit light zsh-users/zsh-completions
-
-# use fzf for completion
-# note that fzf-tab needs to be loaded after compinit,
-# but before plugins that wrap widgets like zsh-autosuggestions
-if [[ -x "$(command -v fzf)" ]]; then
-  zinit load Aloxaf/fzf-tab
-else
-  echo "WARNING: fzf not found in path"
-fi
-
-# run compinit
+# compinit -i for insecure mode
 autoload -Uz compinit
-# # ignore insecure directories if on my laptop with non admin account
-# if [[ $(whoami) = "ian" ]] && [[ $(uname -s) = "Darwin" ]]; then
-#   compinit -i
-# else
-#   compinit
-# fi
-compinit -i
-
-# show history matches when typing
-# must be loaded after fzf
-zinit load zsh-users/zsh-autosuggestions
-
-# search history for substrings
-# note we switch above keybindings to those specific to plugin
-# must be loaded after fzf
-zinit load zsh-users/zsh-history-substring-search
-bindkey "^[[A" history-substring-search-up
-bindkey "^[[B" history-substring-search-down
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
+compinit -i                  
