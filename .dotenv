@@ -55,9 +55,11 @@ fi
 
 # load pyenv
 # (need to add homebrew path before this)
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+if ! [ -x "$(command -v pyenv)" ]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
 
 # load rustup
 # shellcheck disable=SC1091
