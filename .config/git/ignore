@@ -48,6 +48,7 @@ wheels/
 *.egg
 *.pip-log
 *.py[cod]
+*.python-version
 
 
 
