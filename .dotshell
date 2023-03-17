@@ -45,6 +45,9 @@ alias ga='git add'
 alias gc='git commit'
 alias gd='git diff'
 
+# python
+alias sv='source venv/bin/activate'
+
 # tmux
 alias tmux='tmux -2'            # for proper tmux behavior
 
