@@ -14,7 +14,7 @@
 echo
 echo 'Running user account bootstrap process...'
 
-TDIR="$HOME/.dotlib"
+TDIR="$HOME/.config/yadm"
 OSNAME="$(uname -s)"
 
 # not actually necessary as everything refers to absolute paths
