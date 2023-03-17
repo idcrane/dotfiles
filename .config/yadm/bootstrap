@@ -14,7 +14,7 @@
 echo
 echo 'Running user account bootstrap process...'
 
-TDIR="$HOME/code/dotlib/templates"
+TDIR="$HOME/code/dotlib"
 OSNAME="$(uname -s)"
 
 # not actually necessary as everything refers to absolute paths
@@ -29,9 +29,9 @@ cd "$HOME" || { echo 'ERROR Cannot cd into ~'; exit 1; }
 # code/
 mkdir -p "$HOME/code/bin"
 mkdir -p "$HOME/code/config"
+mkdir -p "$HOME/code/env"
 mkdir -p "$HOME/code/managed"
 mkdir -p "$HOME/code/scratch"
-
 
 
 #====================================================================
@@ -54,7 +54,7 @@ if [[ -f "$HOME/.config/git/user" ]]; then
 else
   echo "Please enter email address for use with git:"
   read -r GIT_EMAIL
-  sed "s/email@example.com/$GIT_EMAIL/g" "$TDIR/git_user" > "$HOME/.config/git/user"
+  sed "s/email@example.com/$GIT_EMAIL/g" "$TDIR/git_user_template" > "$HOME/.config/git/user"
 fi
 
 
@@ -83,7 +83,6 @@ fi
 if [[ $OSNAME == "Darwin" ]] && [[ ! -f "$HOME/.bash_sessions_disable" ]]; then
   cp "$TDIR/bash_sessions_disable" "$HOME/.bash_sessions_disable"
 fi
-
 
 
 #====================================================================
@@ -117,11 +116,8 @@ else
 fi
 
 
-
 #====================================================================
 # Final Instructions
-
-ln -s "$HOME/.config/yadm/bootstrap" "$HOME/code/dotlib/bootstrap"
 
 echo "
 Bootstrap complete! Please see README for final tasks.
