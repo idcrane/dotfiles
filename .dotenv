@@ -72,11 +72,3 @@ export TERM='screen-256color'
 if [[ -d "$HOME/code/bin" ]]; then
     export PATH="$HOME/code/bin:$PATH"
 fi
-
-
-#====================================================================
-# Finalize
-
-# load machine-dependent, shell-independent environment
-# shellcheck disable=SC1091
-[[ -f "$HOME/.dotenv_local" ]] && . "$HOME/.dotenv_local"
