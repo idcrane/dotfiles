@@ -24,8 +24,7 @@ zinit self-update   # in a new shell if using zsh
 
 ### Post-Bootstrap Tasks
 
-- `ssh-keygen-25519` to create ssh keys (`id_ed25519` and `id_ed25519_git`)
-- Install Miniconda (try `install-miniconda`)
+- Create ssh keys
 
 ## Dependencies
 

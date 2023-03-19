@@ -37,14 +37,14 @@ mkdir -p "$HOME/code/scratch"
 #====================================================================
 # Copy Templates
 
-## dotenv_local (~/.dotenv_local)
-if [[ -f "$HOME/dotenv_local" ]]; then
-  echo "WARNING: '$HOME/dotenv_local' already exists. Skipping."
+# ## dotenv_local (~/.dotenv_local)
+# if [[ -f "$HOME/dotenv_local" ]]; then
+#   echo "WARNING: '$HOME/dotenv_local' already exists. Skipping."
 
-else
-  cp "$TDIR/dotenv_local" "$HOME/.dotenv_local"
-  chmod 600 "$HOME/.dotenv_local"
-fi
+# else
+#   cp "$TDIR/dotenv_local" "$HOME/.dotenv_local"
+#   chmod 600 "$HOME/.dotenv_local"
+# fi
 
 
 ## git user (~/.config/git/user)
