@@ -12,15 +12,10 @@
 # before this file.
 #
 
-
 OSNAME=$(uname -s)
 
 
-#====================================================================
-# OS-Specfic
-
 if [[ $OSNAME == "Darwin" ]]; then
-
     ## macOS installation ##
 
     # disable macOS bash deprecation warning
@@ -39,7 +34,6 @@ if [[ $OSNAME == "Darwin" ]]; then
     launchctl setenv PATH "$PATH"
 
 else
-
     ## linux installation ##
 
     # keychain
@@ -49,9 +43,6 @@ else
 
 fi
 
-
-#====================================================================
-# General
 
 # load pyenv
 # (need to add homebrew path before this)
