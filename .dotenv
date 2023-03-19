@@ -68,11 +68,6 @@ fi
 # 256 color terminal
 export TERM='screen-256color'
 
-# user dotfiles bin directory
-if [[ -d "$HOME/code/dotlib/bin" ]]; then
-    export PATH="$HOME/code/dotlib/bin:$PATH"
-fi
-
 # user bin directory
 if [[ -d "$HOME/code/bin" ]]; then
     export PATH="$HOME/code/bin:$PATH"
