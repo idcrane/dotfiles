@@ -28,16 +28,13 @@ alias la='ls -lAhF'
 
 alias home='cd ~'
 alias co='cd ~/code'
-alias ico='cd ~/code/github.com/idcrane'
 
 # bat
-if [[ -x "$(command -v bat)" ]]; then
-    alias cat='bat'
-    alias less='bat'
-fi
+# if [[ -x "$(command -v bat)" ]]; then
+#     alias cat='bat'
+#     alias less='bat'
+# fi
 
-# dotfiles and stow
-alias dotstow='stow --dotfiles -t ~ -d $DOTDIR'
 
 # git
 alias gs='git status'
@@ -88,7 +85,5 @@ if [[ $OSNAME == "Darwin" ]]; then
 
     alias search='mdfind -name'
     alias show='open -R'
-    alias finder_show_hidden='defaults write com.apple.Finder AppleShowAllFiles true && killall Finder'
-    alias finder_hide_hidden='defaults write com.apple.Finder AppleShowAllFiles false && killall Finder'
- 
+
 fi
