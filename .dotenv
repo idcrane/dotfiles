@@ -14,6 +14,21 @@
 
 OSNAME=$(uname -s)
 
+# load rustup
+# shellcheck disable=SC1091
+[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+
+# 256 color terminal
+export TERM='screen-256color'
+
+# user bin directory
+if [[ -d "$HOME/.dotbin" ]]; then
+    export PATH="$HOME/.dotbin:$PATH"
+fi
+
+if [[ -d "$HOME/Drive/Libraries/code" ]]; then
+    export PATH="$HOME/Drive/Libraries/code:$PATH"
+fi
 
 if [[ $OSNAME == "Darwin" ]]; then
     ## macOS installation ##
@@ -24,13 +39,9 @@ if [[ $OSNAME == "Darwin" ]]; then
     # homebrew apple silicon
     if [[ -d '/opt/homebrew/bin/' ]]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
-    # homebrew intel
-    elif [[ -d '/usr/local/bin' ]]; then
-        export PATH='/usr/local/bin:'$PATH
     fi
 
     # export values to entire system
-    # uses $PATH as it exists -- future changes won't carry over
     launchctl setenv PATH "$PATH"
 
 else
@@ -41,25 +52,4 @@ else
         eval "$(keychain --eval --agents ssh --quiet --ignore-missing id_rsa id_ed25519 id_ed25519_git)"
     fi
 
-fi
-
-
-# load pyenv
-# (need to add homebrew path before this)
-if [ -x "$(command -v pyenv)" ]; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-fi
-
-# load rustup
-# shellcheck disable=SC1091
-[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
-
-# 256 color terminal
-export TERM='screen-256color'
-
-# user bin directory
-if [[ -d "$HOME/code/bin" ]]; then
-    export PATH="$HOME/code/bin:$PATH"
 fi

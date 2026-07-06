@@ -177,9 +177,6 @@ set smartindent
 " toggle spell check with ",ss" 
 map <leader>ss :setlocal spell!<cr>
 
-" toggle paste / nopaste with <F2> key
-set pastetoggle=<F2>
-
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
