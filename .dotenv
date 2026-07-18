@@ -21,25 +21,31 @@ OSNAME=$(uname -s)
 # 256 color terminal
 export TERM='screen-256color'
 
-# user bin directory
+# User bin directory
 if [[ -d "$HOME/.dotbin" ]]; then
     export PATH="$HOME/.dotbin:$PATH"
 fi
 
-if [[ -d "$HOME/Drive/Libraries/code" ]]; then
-    export PATH="$HOME/Drive/Libraries/code:$PATH"
+# Alternative bin directory
+if [[ -d "$HOME/Drive/code" ]]; then
+    export PATH="$HOME/Drive/code:$PATH"
 fi
 
 if [[ $OSNAME == "Darwin" ]]; then
     ## macOS installation ##
 
-    # disable macOS bash deprecation warning
-    export BASH_SILENCE_DEPRECATION_WARNING=1
-
     # homebrew apple silicon
     if [[ -d '/opt/homebrew/bin/' ]]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
     fi
+
+    # iCloud Drive bin directory
+    if [[ -d "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Drive/code" ]]; then
+        export PATH="$HOME/Library/Mobile Documents/com~apple~CloudDocs/Drive/code:$PATH"
+    fi
+
+    # disable macOS bash deprecation warning
+    export BASH_SILENCE_DEPRECATION_WARNING=1
 
     # export values to entire system
     launchctl setenv PATH "$PATH"

@@ -27,11 +27,11 @@ cd "$HOME" || { echo 'ERROR Cannot cd into ~'; exit 1; }
 # Create Directory Structure
 
 # code/
-mkdir -p "$HOME/code/bin"
-mkdir -p "$HOME/code/config"
-mkdir -p "$HOME/code/env"
-mkdir -p "$HOME/code/managed"
-mkdir -p "$HOME/code/scratch"
+# mkdir -p "$HOME/code/bin"
+# mkdir -p "$HOME/code/config"
+# mkdir -p "$HOME/code/env"
+# mkdir -p "$HOME/code/managed"
+# mkdir -p "$HOME/code/scratch"
 
 
 #====================================================================
