@@ -37,6 +37,9 @@ if [[ $OSNAME == "Darwin" ]]; then
     # homebrew apple silicon
     if [[ -d '/opt/homebrew/bin/' ]]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
+        if [[ -d '/opt/homebrew/opt/ffmpeg-full/bin' ]]; then
+            export PATH="/opt/homebrew/opt/ffmpeg-full/bin:$PATH"
+        fi
     fi
 
     # iCloud Drive bin directory
