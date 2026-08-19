@@ -4,70 +4,39 @@
 "
 
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" cheatsheet
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Begin Setup
+" :PlugInstall                                       " install all
+" :PlugUpdate                                        " update all
 
-call plug#begin('~/.vim.plugged')
+" Plugins installed in .vim/Plugged, which is git-ignored
+"
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" register plugins
 
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Ctrl P
-
-Plug 'ctrlpvim/ctrlp.vim'
-
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" FZF
-
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-Plug 'junegunn/fzf.vim'
-
-let $FZF_DEFAULT_COMMAND = 'find . -type f -not -iname "*.pyc" -not -path "*/\.git/*"'
-nnoremap <C-p> :FZF<CR>
+call plug#begin()
+" Plug 'ctrlpvim/ctrlp.vim'                            " Ctrl P
+Plug 'arcticicestudio/nord-vim'                      " Nord Colorscheme
+Plug 'scrooloose/nerdtree'                           " NerdTree
+Plug 'vim-airline/vim-airline'                       " Airline
+Plug 'vim-airline/vim-airline-themes'                " Airline Themes
+call plug#end()
 
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" plugin config
+" also look at the end of .vimrc for try catch statements
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" NERDTree
-
-Plug 'scrooloose/nerdtree'
-
+" NerdTree
 let NERDTreeShowBookmarks=1
 let NERDTreeShowHidden=1
-
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark
 map <leader>nf :NERDTreeFind<cr>
 
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Nord Vim
-
-Plug 'arcticicestudio/nord-vim'
-
-try
-    colorscheme nord
-catch
-endtry
-
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim-airline
-
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
+" Airline
 let g:airline_theme='minimalist'
 let g:airline_solarized_bg='dark'
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Initialize Plugins
-
-call plug#end()
