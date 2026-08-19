@@ -86,7 +86,8 @@ source ~/.vim/plugins.vim                 " load plugins with Plug
 
 
 try                                       " set color depending on plugins
-    color nord
+    color iceberg
+    set background=dark
 catch  
     color slate
 endtry

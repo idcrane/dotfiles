@@ -17,11 +17,15 @@
 " register plugins
 
 call plug#begin()
+
 " Plug 'ctrlpvim/ctrlp.vim'                            " Ctrl P
-Plug 'arcticicestudio/nord-vim'                      " Nord Colorscheme
 Plug 'scrooloose/nerdtree'                           " NerdTree
 Plug 'vim-airline/vim-airline'                       " Airline
+
+" Plug 'arcticicestudio/nord-vim'                      " Nord Color
+Plug 'cocopon/iceberg.vim'                           " Iceberg Color
 Plug 'vim-airline/vim-airline-themes'                " Airline Themes
+
 call plug#end()
 
 
