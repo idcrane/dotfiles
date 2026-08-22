@@ -24,6 +24,9 @@ export TERM='screen-256color'
 # User bin directory
 if [[ -d "$HOME/.dotbin" ]]; then
     export PATH="$HOME/.dotbin:$PATH"
+    if [[ -d "$HOME/.dotbin/code-repo" ]]; then
+        export PATH="$HOME/.dotbin/code-repo:$PATH"
+    fi
 fi
 
 # Alternative bin directory
@@ -40,11 +43,6 @@ if [[ $OSNAME == "Darwin" ]]; then
         if [[ -d '/opt/homebrew/opt/ffmpeg-full/bin' ]]; then
             export PATH="/opt/homebrew/opt/ffmpeg-full/bin:$PATH"
         fi
-    fi
-
-    # iCloud Drive bin directory
-    if [[ -d "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Drive/code" ]]; then
-        export PATH="$HOME/Library/Mobile Documents/com~apple~CloudDocs/Drive/code:$PATH"
     fi
 
     # disable macOS bash deprecation warning
